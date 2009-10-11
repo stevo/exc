@@ -1,7 +1,40 @@
 Exc
 ===
 
-Introduction goes here.
+You can use exc to create many multi-channel error/log/message handlers.
+
+Currently 4 processors are available:
+
+
+:console
+(turn on by passing ':console => true')
+
+
+
+:rails_log
+(turn on by passing ':rails_log => true')
+
+
+
+:global_flash
+(turn on by passing 'global_flash => true')
+Place following or similar code to application controller to use it
+
+...
+ after_filter :show_errors
+ def show_errors
+    flash[:warn] = Err.message if Err.errors?
+  end
+...
+
+
+
+:custom_logger
+Usage:
+SR_LOGGER = Logger.new(File.join(RAILS_ROOT,'log','system.log'))
+Log = ErrorMessageHandler.new( :custom_log => [SR_LOGGER])
+
+
 
 Example (general usage)
 ===================================
@@ -68,4 +101,4 @@ end
 Exc.create(:klass => "Log", :message => "nice!!!")
 
 
-Copyright (c) 2009 [Selleo], released under the MIT license
+Copyright (c) 2009 [Selleo]
