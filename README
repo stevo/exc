@@ -1,0 +1,71 @@
+Exc
+===
+
+Introduction goes here.
+
+Example (general usage)
+===================================
+
+>> AppError = ErrorMessageHandler.new(:console => true, :rails_log => true, :global_flash => true)
+=> AppError
+
+>> AppError.errors?
+=> false
+
+>> AppError.new('Normal error message...')
+Normal error message...
+=> #<AppError:0x6164f58>
+
+>> AppError.new('Persistant error message...', :persistant => true)
+Persistant error message...
+=> #<AppError:0x616163c>
+
+>> AppError.errors?
+=> true
+
+>> AppError.message
+=> "<li>Normal error message...</li><li>Persistant error message...</li>"
+
+>> AppError.message
+=> "<li>Persistant error message...</li>"
+
+>> AppError.new(Exception.new("New error from exception"))
+New error from exception
+=> #<AppError:0x615aa6c>
+
+>> AppError.new(Exception.new("New persistant error from exception"), :persistant => true)
+New persistant error from exception
+=> #<AppError:0x6155b98>
+
+>> AppError.errors?
+=> true
+
+>> AppError.errors
+=> [#<struct Exc message="Persistant error message...", persistant=true, obj=nil>, #<struct Exc message="New error from exception", persistant=nil, obj=#<Exception: New error from exception>>, #<struct Exc message="New persistant error from exception", persistant=true, obj=#<Exception: New persistant error from exception>>]
+
+>> AppError.message
+=> "<li>Persistant error message...</li><li>New error from exception</li><li>New persistant error from exception</li>"
+
+>> AppError.message
+=> "<li>Persistant error message...</li><li>New persistant error from exception</li>"
+
+>> AppError.purge_errors!
+=> []
+
+>> AppError.message
+=> ""
+
+
+Example (remote execution)
+===================================
+
+require 'activeresource'
+
+class Exc  < ActiveResource::Base
+    self.site = "http://localhost:3000"
+end
+
+Exc.create(:klass => "Log", :message => "nice!!!")
+
+
+Copyright (c) 2009 [Selleo], released under the MIT license
