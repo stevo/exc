@@ -101,4 +101,4 @@ end
 Exc.create(:klass => "Log", :message => "nice!!!")
 
 
-Copyright (c) 2009 [Selleo]
+Copyright (c) 2009 b.kosmowski@selleo.com [Stevo], released under the MIT license
